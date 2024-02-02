@@ -14,7 +14,6 @@ import { Link } from "@inertiajs/vue3";
         <div class="space my-14"></div>
         <NewProducts />
         <Footer />
-
         <Link :href="route('home')" />
     </div>
 </template>

@@ -17,3 +17,11 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Home/Index');
 })->name('home');
+
+Route::get('/about', function () {
+    return Inertia::render('About/Index');
+})->name('about');
+
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard/Products/Index');
+})->name('dashboard');
