@@ -4,14 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Unit extends Model
 {
     use HasFactory;
 
-    public function product(): BelongsTo
+    public function weight()
     {
-        return $this->belongsTo(Product::class);
+        return $this->hasMany(Weight::class);
+    }
+
+    public function size()
+    {
+        return $this->hasMany(Size::class);
     }
 }

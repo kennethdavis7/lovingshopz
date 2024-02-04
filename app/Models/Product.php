@@ -9,18 +9,23 @@ class Product extends Model
 {
     use HasFactory;
 
-    public function image()
+    public function images()
     {
         return $this->hasMany(ImageProduct::class);
     }
 
-    public function unit()
+    public function size()
     {
-        return $this->hasMany(Unit::class);
+        return $this->belongsTo(Size::class);
+    }
+
+    public function weight()
+    {
+        return $this->belongsTo(Weight::class);
     }
 
     public function category()
     {
-        return $this->hasMany(Category::class);
+        return $this->belongsTo(Category::class);
     }
 }

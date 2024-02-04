@@ -1,10 +1,10 @@
 <script setup></script>
 <template>
-    <nav class="bg-white border-gray-200 dark:bg-gray-900">
+    <nav class="bg-white border-gray-200">
         <div class="w-full max-w-screen-xl mx-auto p-4">
             <div class="sm:flex sm:items-center sm:justify-between md:pb-5">
                 <span
-                    class="text-sm text-gray-500 sm:text-center dark:text-gray-400"
+                    class="text-sm text-gray-500 sm:text-center"
                     >© 2024
                     <a href="https://flowbite.com/" class="hover:underline"
                         >Lovingshopz</a
@@ -14,7 +14,7 @@
                 <div class="flex mt-4 sm:justify-center sm:mt-0">
                     <a
                         href="https://www.facebook.com/lovingshopz55"
-                        class="text-gray-500 hover:text-gray-900 dark:hover:text-white"
+                        class="text-gray-500 hover:text-gray-900"
                     >
                         <svg
                             class="w-4 h-4"
@@ -33,7 +33,7 @@
                     </a>
                     <a
                         href="#"
-                        class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
+                        class="text-gray-500 hover:text-gray-900 ms-5"
                     >
                         <svg
                             class="w-4 h-4"
@@ -51,13 +51,13 @@
                     </a>
                 </div>
             </div>
-            <hr class="border-gray-200 sm:mx-auto dark:border-gray-700" />
+            <hr class="border-gray-200 sm:mx-auto" />
         </div>
         <div
             class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
         >
             <div
-                class="text-sm text-gray-500 sm:text-center dark:text-gray-400 flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
+                class="text-sm text-gray-500 sm:text-center flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
             >
                 <a href="https://flowbite.com/">
                     <img
@@ -81,7 +81,7 @@
                             />
                         </svg>
                         <span
-                            class="ml-5 text-sm text-gray-500 sm:text-center dark:text-gray-400 flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
+                            class="ml-5 text-sm text-gray-500 sm:text-center flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
                         >
                             Taman Palem Blok K32, Cengkareng, Jakarta Barat
                         </span>
@@ -100,7 +100,7 @@
                             />
                         </svg>
                         <span
-                            class="ml-5 text-sm text-gray-500 sm:text-center dark:text-gray-400 flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
+                            class="ml-5 text-sm text-gray-500 sm:text-center flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
                         >
                             salesmarketinglovingshopz@gmail.com
                         </span>
@@ -109,12 +109,12 @@
             </div>
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
                 <ul
-                    class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
+                    class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white md:dark:bg-gray-900"
                 >
                     <li>
                         <a
                             href="http://127.0.0.1:8000"
-                            class="block py-2 px-3 text-white bg-green-700 rounded md:bg-transparent md:text-green-700 md:p-0 dark:text-white md:dark:text-green-500"
+                            class="block py-2 px-3 text-white bg-green-700 rounded md:bg-transparent md:text-green-700 md:p-0 md:dark:text-green-500"
                             aria-current="page"
                             >Home</a
                         >
@@ -122,14 +122,14 @@
                     <li>
                         <a
                             href="http://127.0.0.1:8000/about"
-                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 md:dark:hover:bg-transparent"
                             >About</a
                         >
                     </li>
                     <li>
                         <a
                             href="#"
-                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 md:dark:hover:bg-transparent"
                             >Login</a
                         >
                     </li>
@@ -137,7 +137,7 @@
             </div>
         </div>
     </nav>
-    <nav class="bg-gray-50 dark:bg-gray-700 mb-10">
+    <nav class="bg-gray-50 mb-10">
         <div class="w-full max-w-screen-xl px-4 py-5 mx-auto">
             <div class="flex items-center">
                 <ul
@@ -146,7 +146,7 @@
                     <li>
                         <a
                             href="#"
-                            class="text-gray-900 dark:text-white hover:underline"
+                            class="text-gray-900 hover:underline"
                             aria-current="page"
                             >Pulpen</a
                         >
@@ -154,21 +154,21 @@
                     <li>
                         <a
                             href="#"
-                            class="text-gray-900 dark:text-white hover:underline"
+                            class="text-gray-900 hover:underline"
                             >Printer</a
                         >
                     </li>
                     <li>
                         <a
                             href="#"
-                            class="text-gray-900 dark:text-white hover:underline"
+                            class="text-gray-900 hover:underline"
                             >Pensil</a
                         >
                     </li>
                     <li>
                         <a
                             href="#"
-                            class="text-gray-900 dark:text-white hover:underline"
+                            class="text-gray-900 hover:underline"
                             >Penghapus</a
                         >
                     </li>

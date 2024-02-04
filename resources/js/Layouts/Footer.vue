@@ -3,7 +3,7 @@
         <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
             <div class="sm:flex sm:items-center sm:justify-between">
                 <div
-                    class="text-sm text-gray-500 sm:text-center dark:text-gray-400 flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
+                    class="text-sm text-gray-500 sm:text-center flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
                 >
                     <a href="https://flowbite.com/">
                         <img
@@ -27,7 +27,7 @@
                                 />
                             </svg>
                             <span
-                                class="ml-5 text-sm text-gray-500 sm:text-center dark:text-gray-400 flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
+                                class="ml-5 text-sm text-gray-500 sm:text-center flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
                             >
                                 Taman Palem Blok K32, Cengkareng, Jakarta Barat
                             </span>
@@ -46,7 +46,7 @@
                                 />
                             </svg>
                             <span
-                                class="ml-5 text-sm text-gray-500 sm:text-center dark:text-gray-400 flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
+                                class="ml-5 text-sm text-gray-500 sm:text-center flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
                             >
                                 salesmarketinglovingshopz@gmail.com
                             </span>
@@ -54,12 +54,12 @@
                     </div>
                 </div>
                 <ul
-                    class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400"
+                    class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0"
                 >
                     <li>
                         <a
                             href="#"
-                            class="mr-5 block py-2 px-3 text-white bg-green-700 rounded md:bg-transparent md:text-green-700 md:p-0 dark:text-white md:dark:text-green-500"
+                            class="mr-5 block py-2 px-3 text-white bg-green-700 rounded md:bg-transparent md:text-green-700 md:p-0 md:dark:text-green-500"
                             aria-current="page"
                             >Home</a
                         >
@@ -67,25 +67,25 @@
                     <li>
                         <a
                             href="#"
-                            class="mr-5 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                            class="mr-5 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 md:dark:hover:bg-transparent"
                             >About</a
                         >
                     </li>
                     <li>
                         <a
                             href="#"
-                            class="mr-5 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                            class="mr-5 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 md:dark:hover:bg-transparent"
                             >Login</a
                         >
                     </li>
                 </ul>
             </div>
             <hr
-                class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"
+                class="my-6 border-gray-200 sm:mx-auto lg:my-8"
             />
             <div class="sm:flex sm:items-center sm:justify-between">
                 <span
-                    class="text-sm text-gray-500 sm:text-center dark:text-gray-400"
+                    class="text-sm text-gray-500 sm:text-center"
                     >© 2024
                     <a href="https://flowbite.com/" class="hover:underline"
                         >Lovingshopz</a
@@ -94,7 +94,7 @@
                 <div class="flex mt-4 sm:justify-center sm:mt-0">
                     <a
                         href="https://www.facebook.com/lovingshopz55"
-                        class="text-gray-500 hover:text-gray-900 dark:hover:text-white"
+                        class="text-gray-500 hover:text-gray-900"
                     >
                         <svg
                             class="w-4 h-4"
@@ -113,7 +113,7 @@
                     </a>
                     <a
                         href="#"
-                        class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
+                        class="text-gray-500 hover:text-gray-900 ms-5"
                     >
                         <svg
                             class="w-4 h-4"

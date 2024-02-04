@@ -14,8 +14,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('category')->get();
-        return Inertia::render('Dashboard/Products/Index', [
+        $products = Product::with('category', 'images', 'size', 'weight')->get();
+        return Inertia::render('Admin/Products/Index', [
             'products' => $products
         ]);
     }
@@ -25,7 +25,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Products/Create');
     }
 
     /**

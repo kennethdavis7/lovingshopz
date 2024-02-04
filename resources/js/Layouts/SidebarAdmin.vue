@@ -1,18 +1,18 @@
 <template>
     <aside
         id="logo-sidebar"
-        class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+        class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0"
         aria-label="Sidebar"
     >
-        <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+        <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
             <ul class="space-y-2 font-medium">
                 <li>
                     <a
                         href="#"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
                     >
                         <svg
-                            class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"
                             aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="currentColor"
@@ -31,10 +31,10 @@
                 <li>
                     <a
                         href="#"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white bg-gray-100 dark:bg-gray-400 group"
+                        class="flex items-center p-2 text-gray-900 rounded-lg bg-gray-100 group"
                     >
                         <svg
-                            class="flex-shrink-0 w-5 h-5 text-green-600 transition duration-75 dark:text-green-400 dark:group-hover:text-white"
+                            class="flex-shrink-0 w-5 h-5 text-green-600 transition duration-75"
                             aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="currentColor"
@@ -45,7 +45,7 @@
                             />
                         </svg>
                         <span
-                            class="flex-1 ms-3 whitespace-nowrap block py-2 px-3 text-white bg-green-700 rounded md:bg-transparent md:text-green-600 md:p-0 dark:text-white md:dark:text-green-500"
+                            class="flex-1 ms-3 whitespace-nowrap block py-2 px-3 text-white bg-green-700 rounded md:bg-transparent md:text-green-600 md:p-0 md:dark:text-green-500"
                             >Products</span
                         >
                     </a>
@@ -53,10 +53,10 @@
                 <li>
                     <a
                         href="#"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
                     >
                         <svg
-                            class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"
                             aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="currentColor"
@@ -74,10 +74,10 @@
                 <li>
                     <a
                         href="#"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
                     >
                         <svg
-                            class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"
                             aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="currentColor"
@@ -89,7 +89,7 @@
                         </svg>
                         <span class="flex-1 ms-3 whitespace-nowrap">Order</span>
                         <span
-                            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-green-800 bg-green-100 rounded-full dark:bg-green-900 dark:text-green-300"
+                            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-green-800 bg-green-100 rounded-full"
                             >3</span
                         >
                     </a>
@@ -97,10 +97,10 @@
                 <li>
                     <a
                         href="#"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
                     >
                         <svg
-                            class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"
                             aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="currentColor"

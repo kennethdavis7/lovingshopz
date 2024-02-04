@@ -4,7 +4,7 @@
             class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 z-10 relative"
         >
             <h1
-                class="text-4xl mb-10 font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
+                class="text-4xl mb-10 font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl"
             >
                 Belanja ATK dengan Harga Terjangkau!
             </h1>
@@ -13,7 +13,7 @@
             >
                 <a
                     href="#"
-                    class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 dark:focus:ring-green-900"
+                    class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300"
                 >
                     Belanja Sekarang
                     <svg
