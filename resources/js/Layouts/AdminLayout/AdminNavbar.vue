@@ -1,10 +1,9 @@
 <script setup>
+import { Link } from "@inertiajs/vue3";
 const props = defineProps(["active"]);
 </script>
 <template>
-    <nav
-        class="fixed top-0 z-50 w-full bg-white border-b border-gray-200"
-    >
+    <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200">
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
             <div class="flex items-center justify-between">
                 <div class="flex items-center justify-start rtl:justify-end">
@@ -32,7 +31,7 @@ const props = defineProps(["active"]);
                     </button>
                     <a href="https://flowbite.com" class="flex ms-2 md:me-24">
                         <img
-                            src="../../img/logo.png"
+                            src="../../../img/logo.png"
                             class="h-12 me-3"
                             alt="Lovingshopz Logo"
                         />
@@ -60,10 +59,7 @@ const props = defineProps(["active"]);
                             id="dropdown-user"
                         >
                             <div class="px-4 py-3" role="none">
-                                <p
-                                    class="text-sm text-gray-900"
-                                    role="none"
-                                >
+                                <p class="text-sm text-gray-900" role="none">
                                     Neil Sims
                                 </p>
                                 <p
@@ -75,35 +71,35 @@ const props = defineProps(["active"]);
                             </div>
                             <ul class="py-1" role="none">
                                 <li>
-                                    <a
+                                    <Link
                                         href="#"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                         role="menuitem"
-                                        >Dashboard</a
+                                        >Dashboard
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="#"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                        role="menuitem"
+                                        >Settings</Link
                                     >
                                 </li>
                                 <li>
-                                    <a
+                                    <Link
                                         href="#"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                         role="menuitem"
-                                        >Settings</a
+                                        >Earnings</Link
                                     >
                                 </li>
                                 <li>
-                                    <a
+                                    <Link
                                         href="#"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                         role="menuitem"
-                                        >Earnings</a
-                                    >
-                                </li>
-                                <li>
-                                    <a
-                                        href="#"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                        role="menuitem"
-                                        >Sign out</a
+                                        >Sign out</Link
                                     >
                                 </li>
                             </ul>

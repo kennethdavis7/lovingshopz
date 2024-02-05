@@ -5,6 +5,11 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +32,7 @@ Route::get('/', function () {
 });
 
 Route::inertia('/', 'Home/Index')->name('home');
+Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::resource('products', ProductController::class)->names(
     [
@@ -39,9 +45,42 @@ Route::resource('products', ProductController::class)->names(
     ]
 );
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::resource('categories', CategoryController::class)->names(
+    [
+        'index' => 'categories.index',
+        'create' => 'categories.create',
+        'store' => 'categories.store',
+        'edit' => 'categories.edit',
+        'update' => 'categories.update',
+        'delete' => 'categories.delete',
+    ]
+);
+
+Route::resource('orders', OrderController::class)->names(
+    [
+        'index' => 'orders.index',
+        'create' => 'orders.create',
+        'store' => 'orders.store',
+        'edit' => 'orders.edit',
+        'update' => 'orders.update',
+        'delete' => 'orders.delete',
+    ]
+);
+
+Route::resource('users', UserController::class)->names(
+    [
+        'index' => 'users.index',
+        'create' => 'users.create',
+        'store' => 'users.store',
+        'edit' => 'users.edit',
+        'update' => 'users.update',
+        'delete' => 'users.delete',
+    ]
+);
+
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

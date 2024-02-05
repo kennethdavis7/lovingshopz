@@ -7,7 +7,7 @@
                 >
                     <a href="https://flowbite.com/">
                         <img
-                            src="../../img/logo.png"
+                            src="../../../img/logo.png"
                             class="w-44"
                             alt="Lovingshopz Logo"
                         />
@@ -80,12 +80,9 @@
                     </li>
                 </ul>
             </div>
-            <hr
-                class="my-6 border-gray-200 sm:mx-auto lg:my-8"
-            />
+            <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8" />
             <div class="sm:flex sm:items-center sm:justify-between">
-                <span
-                    class="text-sm text-gray-500 sm:text-center"
+                <span class="text-sm text-gray-500 sm:text-center"
                     >© 2024
                     <a href="https://flowbite.com/" class="hover:underline"
                         >Lovingshopz</a
@@ -111,10 +108,7 @@
                         </svg>
                         <span class="sr-only">Facebook page</span>
                     </a>
-                    <a
-                        href="#"
-                        class="text-gray-500 hover:text-gray-900 ms-5"
-                    >
+                    <a href="#" class="text-gray-500 hover:text-gray-900 ms-5">
                         <svg
                             class="w-4 h-4"
                             aria-hidden="true"

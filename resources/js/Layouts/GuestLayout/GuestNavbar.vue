@@ -1,10 +1,11 @@
-<script setup></script>
+<script setup>
+import { Link } from "@inertiajs/vue3";
+</script>
 <template>
     <nav class="bg-white border-gray-200">
         <div class="w-full max-w-screen-xl mx-auto p-4">
             <div class="sm:flex sm:items-center sm:justify-between md:pb-5">
-                <span
-                    class="text-sm text-gray-500 sm:text-center"
+                <span class="text-sm text-gray-500 sm:text-center"
                     >© 2024
                     <a href="https://flowbite.com/" class="hover:underline"
                         >Lovingshopz</a
@@ -31,10 +32,7 @@
                         </svg>
                         <span class="sr-only">Facebook page</span>
                     </a>
-                    <a
-                        href="#"
-                        class="text-gray-500 hover:text-gray-900 ms-5"
-                    >
+                    <a href="#" class="text-gray-500 hover:text-gray-900 ms-5">
                         <svg
                             class="w-4 h-4"
                             aria-hidden="true"
@@ -61,7 +59,7 @@
             >
                 <a href="https://flowbite.com/">
                     <img
-                        src="../../img/logo.png"
+                        src="../../../img/logo.png"
                         class="w-44"
                         alt="Lovingshopz Logo"
                     />
@@ -127,11 +125,11 @@
                         >
                     </li>
                     <li>
-                        <a
-                            href="#"
+                        <Link
+                            :href="route('login')"
                             class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 md:dark:hover:bg-transparent"
-                            >Login</a
-                        >
+                            >Login
+                        </Link>
                     </li>
                 </ul>
             </div>
@@ -152,23 +150,17 @@
                         >
                     </li>
                     <li>
-                        <a
-                            href="#"
-                            class="text-gray-900 hover:underline"
+                        <a href="#" class="text-gray-900 hover:underline"
                             >Printer</a
                         >
                     </li>
                     <li>
-                        <a
-                            href="#"
-                            class="text-gray-900 hover:underline"
+                        <a href="#" class="text-gray-900 hover:underline"
                             >Pensil</a
                         >
                     </li>
                     <li>
-                        <a
-                            href="#"
-                            class="text-gray-900 hover:underline"
+                        <a href="#" class="text-gray-900 hover:underline"
                             >Penghapus</a
                         >
                     </li>
