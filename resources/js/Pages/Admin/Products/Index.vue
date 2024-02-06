@@ -3,7 +3,7 @@ import SearchButton from "@/Components/SearchButton.vue";
 import DropdownButton from "@/Components/DropdownButton.vue";
 import PrintButton from "@/Components/PrintButton.vue";
 import CreateButton from "@/Components/CreateButton.vue";
-import Card from "@/Components/CardAdmin.vue";
+import Card from "@/Components/CardTemplate.vue";
 import Content from "@/Components/ContentAdmin.vue";
 import { Link, Head } from "@inertiajs/vue3";
 

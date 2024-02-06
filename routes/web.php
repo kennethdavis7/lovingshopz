@@ -22,65 +22,55 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
 Route::inertia('/', 'Home/Index')->name('home');
-Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::resource('products', ProductController::class)->names(
-    [
-        'index' => 'products.index',
-        'create' => 'products.create',
-        'store' => 'products.store',
-        'edit' => 'products.edit',
-        'update' => 'products.update',
-        'delete' => 'products.delete',
-    ]
-);
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::resource('categories', CategoryController::class)->names(
-    [
-        'index' => 'categories.index',
-        'create' => 'categories.create',
-        'store' => 'categories.store',
-        'edit' => 'categories.edit',
-        'update' => 'categories.update',
-        'delete' => 'categories.delete',
-    ]
-);
+    Route::resource('products', ProductController::class)->names(
+        [
+            'index' => 'products.index',
+            'create' => 'products.create',
+            'store' => 'products.store',
+            'edit' => 'products.edit',
+            'update' => 'products.update',
+            'delete' => 'products.delete',
+        ]
+    );
 
-Route::resource('orders', OrderController::class)->names(
-    [
-        'index' => 'orders.index',
-        'create' => 'orders.create',
-        'store' => 'orders.store',
-        'edit' => 'orders.edit',
-        'update' => 'orders.update',
-        'delete' => 'orders.delete',
-    ]
-);
+    Route::resource('categories', CategoryController::class)->names(
+        [
+            'index' => 'categories.index',
+            'create' => 'categories.create',
+            'store' => 'categories.store',
+            'edit' => 'categories.edit',
+            'update' => 'categories.update',
+            'delete' => 'categories.delete',
+        ]
+    );
 
-Route::resource('users', UserController::class)->names(
-    [
-        'index' => 'users.index',
-        'create' => 'users.create',
-        'store' => 'users.store',
-        'edit' => 'users.edit',
-        'update' => 'users.update',
-        'delete' => 'users.delete',
-    ]
-);
+    Route::resource('orders', OrderController::class)->names(
+        [
+            'index' => 'orders.index',
+            'create' => 'orders.create',
+            'store' => 'orders.store',
+            'edit' => 'orders.edit',
+            'update' => 'orders.update',
+            'delete' => 'orders.delete',
+        ]
+    );
 
-// Route::get('/dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+    Route::resource('users', UserController::class)->names(
+        [
+            'index' => 'users.index',
+            'create' => 'users.create',
+            'store' => 'users.store',
+            'edit' => 'users.edit',
+            'update' => 'users.update',
+            'delete' => 'users.delete',
+        ]
+    );
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
