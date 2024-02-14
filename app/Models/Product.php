@@ -9,19 +9,11 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id', 'created_at', 'updated_at'];
+
     public function images()
     {
         return $this->hasMany(ImageProduct::class);
-    }
-
-    public function size()
-    {
-        return $this->belongsTo(Size::class);
-    }
-
-    public function weight()
-    {
-        return $this->belongsTo(Weight::class);
     }
 
     public function category()

@@ -89,7 +89,7 @@ const submit = () => {
                 </Link>
 
                 <PrimaryButton
-                    class="ms-4"
+                    class="ms-4 px-4 py-2"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
