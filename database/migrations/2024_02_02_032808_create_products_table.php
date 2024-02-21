@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('category_id');
             $table->integer('price');
             $table->string('name');
-            $table->integer('qty');
+            $table->integer('qty')->nullable();
             $table->text('description');
             $table->integer('min_order');
             $table->boolean("status");

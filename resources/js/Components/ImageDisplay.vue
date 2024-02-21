@@ -1,13 +1,17 @@
 <script setup>
 const getImageUrl = (file) => {
-    return URL.createObjectURL(file);
+    if (typeof file === "object") {
+        return URL.createObjectURL(file);
+    }
+
+    return "/" + file;
 };
 
 const revokeImageBlob = (src) => {
     return URL.revokeObjectURL(src);
 };
 
-const props = defineProps(["image", "idx"]);
+const props = defineProps(["image"]);
 
 defineEmits(["deleteImage"]);
 </script>
@@ -18,7 +22,7 @@ defineEmits(["deleteImage"]);
             draggable="false"
         >
             <img
-                :src="getImageUrl(props.image)"
+                :src="getImageUrl(image)"
                 @load="(e) => revokeImageBlob(e.target.src)"
                 class="max-w-full max-h-full"
                 draggable="false"
@@ -26,7 +30,7 @@ defineEmits(["deleteImage"]);
             <button
                 class="absolute top-1 right-1 cursor-pointer"
                 type="button"
-                @click="() => $emit('deleteImage', props.idx)"
+                @click="() => $emit('deleteImage')"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

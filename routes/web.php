@@ -3,7 +3,6 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CategoryController;
@@ -24,8 +23,10 @@ use App\Http\Controllers\UserController;
 
 Route::inertia('/', 'Home/Index')->name('home');
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('products/report', [ProductController::class, 'report'])->name('products.report');
 
     Route::resource('products', ProductController::class)->names(
         [
@@ -34,7 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'store' => 'products.store',
             'edit' => 'products.edit',
             'update' => 'products.update',
-            'delete' => 'products.delete',
+            'destroy' => 'products.destroy',
         ]
     );
 
@@ -45,7 +46,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'store' => 'categories.store',
             'edit' => 'categories.edit',
             'update' => 'categories.update',
-            'delete' => 'categories.delete',
+            'destroy' => 'categories.destroy',
         ]
     );
 
@@ -56,7 +57,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'store' => 'orders.store',
             'edit' => 'orders.edit',
             'update' => 'orders.update',
-            'delete' => 'orders.delete',
+            'destroy' => 'orders.destroy',
         ]
     );
 
@@ -67,7 +68,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'store' => 'users.store',
             'edit' => 'users.edit',
             'update' => 'users.update',
-            'delete' => 'users.delete',
+            'destroy' => 'users.destroy',
         ]
     );
 });

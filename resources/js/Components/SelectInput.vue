@@ -7,22 +7,30 @@ import {
     ListboxOption,
 } from "@headlessui/vue";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
+import { computed } from "vue";
 
 const selectModel = defineModel({
-    type: String,
+    type: [String, Number],
     required: true,
 });
 
-const props = defineProps(["categories"]);
+const props = defineProps(["data", "popupClass", "buttonClass"]);
+
+const selectedDatum = computed(() =>
+    props.data.find((d) => d.id === selectModel.value)
+);
 </script>
 <template>
     <Listbox v-model="selectModel">
-        <div class="relative mt-1 bg-opacity-100">
+        <div class="relative bg-opacity-100">
             <ListboxButton
-                class="relative w-full cursor-default rounded-lg bg-white py-3 pl-3 pr-10 text-left border border-gray-300 sm:text-sm"
-                id="product_category"
+                :class="[
+                    'relative w-full cursor-default rounded-lg bg-white pl-3 pr-10 text-left border border-gray-300 sm:text-sm',
+                    props.buttonClass,
+                ]"
+                id="product_data"
             >
-                <span class="block truncate">{{ selectModel }}</span>
+                <span class="block truncate">{{ selectedDatum?.name }}</span>
                 <span
                     class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
                 >
@@ -39,13 +47,16 @@ const props = defineProps(["categories"]);
                 leave-to-class="opacity-0"
             >
                 <ListboxOptions
-                    class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 z-50 text-base border border-gray-300 ring-1 ring-black/5 focus:outline-none sm:text-sm"
+                    :class="[
+                        'absolute mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 z-50 text-base border border-gray-300 ring-1 ring-black/5 focus:outline-none sm:text-sm',
+                        popupClass,
+                    ]"
                 >
                     <ListboxOption
                         v-slot="{ active, selected }"
-                        v-for="category in props.categories"
-                        :key="category.id"
-                        :value="category.name"
+                        v-for="data in props.data"
+                        :key="data.id"
+                        :value="data.id"
                         as="template"
                     >
                         <li
@@ -61,7 +72,7 @@ const props = defineProps(["categories"]);
                                     selected ? 'font-medium' : 'font-normal',
                                     'block truncate',
                                 ]"
-                                >{{ category.name }}</span
+                                >{{ data.name }}</span
                             >
                             <span
                                 v-if="selected"

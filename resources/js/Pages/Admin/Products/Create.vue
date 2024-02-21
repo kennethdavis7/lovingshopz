@@ -8,20 +8,25 @@ import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import UploadImage from "@/Components/UploadImage.vue";
 import ImageDisplay from "@/Components/ImageDisplay.vue";
-import PublishedToggle from "@/Components/PublishedToggle.vue";
+import Toggle from "@/Components/Toggle.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import CancelButton from "@/Components/CancelButton.vue";
-import { ref, computed } from "vue";
-import { Link, Head } from "@inertiajs/vue3";
+import CurrencyInput from "@/Components/CurrencyInput.vue";
+import { Head } from "@inertiajs/vue3";
+import { watch, ref } from "vue";
 
 const props = defineProps(["categories"]);
+
+const disabled = ref(false);
+
+const temporaryQty = ref();
 
 const form = useForm({
     name: "",
     price: 0,
     qty: 0,
     min_order: 0,
-    category: props.categories[0].name,
+    category_id: props.categories.at(0)?.id,
     description: "",
     images: [],
     status: true,
@@ -29,7 +34,6 @@ const form = useForm({
 
 const handleImageUpload = (e) => {
     for (const file of e.target.files) {
-        console.log(form.images.some((e) => e.name === file.name));
         if (form.images.some((e) => e.name === file.name)) {
             if (
                 file.size >= 6 * 1000 * 1000 ||
@@ -42,7 +46,6 @@ const handleImageUpload = (e) => {
     }
 
     form.images.push(...e.target.files);
-    console.log(form.images);
 };
 
 const handleDeleteImage = (idx) => {
@@ -56,10 +59,20 @@ const toolbar = [
 ];
 
 const submit = () => {
-    form.post(route("products.store"), {
-        forceFormData: true,
-    });
+    form.post(route("products.store"));
 };
+
+watch(disabled, (value) => {
+    if (value === true) {
+        form.qty = null;
+    } else {
+        form.qty = temporaryQty.value;
+    }
+});
+
+watch(temporaryQty, (value) => {
+    form.qty = temporaryQty.value;
+});
 </script>
 
 <template>
@@ -91,30 +104,44 @@ const submit = () => {
                     <div class="mb-5">
                         <InputLabel for="price" value="Price" />
 
-                        <TextInput
+                        <CurrencyInput
                             id="price"
-                            type="number"
                             class="mt-1 block w-full"
                             v-model="form.price"
                             required
-                            autofocus
-                            autocomplete="price"
                         />
                     </div>
-                    <div class="mb-5 flex">
-                        <div class="qty mr-5">
-                            <InputLabel for="qty" value="Quantity" />
 
-                            <TextInput
-                                id="qty"
-                                type="number"
-                                class="mt-1 block w-24"
-                                v-model="form.qty"
-                                required
-                                autofocus
-                            />
+                    <div class="mb-5">
+                        <InputLabel for="qty" value="Quantity" />
+                        <div class="flex">
+                            <div class="qty mr-5">
+                                <TextInput
+                                    :disabled="disabled"
+                                    id="qty"
+                                    type="number"
+                                    :class="[
+                                        'mt-1 block w-24',
+                                        disabled
+                                            ? 'bg-gray-100 appearance-none cursor-not-allowed text-gray-600'
+                                            : '',
+                                    ]"
+                                    v-model="temporaryQty"
+                                    required
+                                />
+                            </div>
+
+                            <div class="stock_toggle flex items-center">
+                                <Toggle
+                                    v-model="disabled"
+                                    true="&infin;"
+                                    false="&infin;"
+                                />
+                            </div>
                         </div>
+                    </div>
 
+                    <div class="mb-5">
                         <div class="min_order">
                             <InputLabel for="min_order" value="Minimal Order" />
 
@@ -124,17 +151,18 @@ const submit = () => {
                                 class="mt-1 block w-24"
                                 v-model="form.min_order"
                                 required
-                                autofocus
                             />
                         </div>
                     </div>
 
                     <div class="mb-5">
-                        <InputLabel for="category" value="Category" />
+                        <InputLabel for="category_id" value="Category" />
                         <SelectInput
-                            id="category"
-                            v-model="form.category"
-                            :categories="props.categories"
+                            id="category_id"
+                            v-model="form.category_id"
+                            :data="props.categories"
+                            popupClass="w-full"
+                            buttonClass="py-3"
                         />
                     </div>
 
@@ -155,7 +183,11 @@ const submit = () => {
                     </div>
 
                     <div class="mb-4">
-                        <PublishedToggle v-model="form.status" />
+                        <Toggle
+                            v-model="form.status"
+                            true="Published"
+                            false="Unpublished"
+                        />
                     </div>
                 </div>
 
@@ -192,7 +224,7 @@ const submit = () => {
                     </div>
                 </div>
             </div>
-            <div class="mb-4 flex justify-end">
+            <div class="mt-8 mb-4 flex justify-end">
                 <CancelButton
                     class="mr-3"
                     :class="{ 'opacity-25': form.processing }"

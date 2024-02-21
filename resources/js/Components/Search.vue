@@ -1,3 +1,10 @@
+<script setup>
+const model = defineModel({
+    type: [String, Number],
+    required: false,
+});
+</script>
+
 <template>
     <label for="table-search" class="sr-only">Search</label>
     <div class="relative">
@@ -23,6 +30,7 @@
             id="table-search"
             class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-green-500 focus:border-green-500"
             placeholder="Search for items"
+            v-model="model"
         />
     </div>
 </template>

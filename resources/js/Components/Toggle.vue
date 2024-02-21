@@ -3,6 +3,13 @@ const toggleModel = defineModel({
     type: Boolean,
     required: true,
 });
+
+const props = defineProps({
+    true: String,
+    false: String,
+});
+
+defineEmits(["change"]);
 </script>
 
 <template>
@@ -14,12 +21,12 @@ const toggleModel = defineModel({
         <span
             v-if="toggleModel"
             class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >Published</span
+            >{{ props.true }}</span
         ><span
             v-else
             class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
         >
-            Unpublished
+            {{ props.false }}
         </span>
     </label>
 </template>
