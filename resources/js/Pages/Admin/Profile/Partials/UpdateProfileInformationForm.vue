@@ -14,7 +14,7 @@ defineProps({
     },
 });
 
-const user = usePage().props.auth.user;
+const user = usePage().props.auth.adminUser;
 
 const form = useForm({
     name: user.name,
@@ -35,7 +35,7 @@ const form = useForm({
         </header>
 
         <form
-            @submit.prevent="form.patch(route('profile.update'))"
+            @submit.prevent="form.patch(route('admin.profile.update'))"
             class="mt-6 space-y-6"
         >
             <div>

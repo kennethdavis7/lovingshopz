@@ -11,6 +11,7 @@
 <style>
     table {
         border-spacing: 0;
+        box-sizing: border-box;
     }
 </style>
 
@@ -20,22 +21,24 @@
     <table class="table" border="1" width="100%">
         <tr>
             <th>NO</th>
-            <th>IMAGE URL</th>
             <th>PRODUCT NAME</th>
             <th>CATEGORY</th>
             <th>QUANTITY</th>
             <th>PRICE</th>
-            <th>DESCRIPTION</th>
         </tr>
         @foreach($products as $product)
         <tr>
             <th>{{$loop->index + 1}}</th>
-            <th></th>
             <td>{{$product->name}}</td>
             <td>{{$product->category->name}}</td>
-            <td>{{$product->qty}}</td>
-            <td>{{$product->price}}</td>
-            <td>{{strip_tags($product->description)}}</td>
+            <td>
+                @if(gettype($product->qty) == 'integer')
+                {{$product->qty}}
+                @else
+                &infin;
+                @endif
+            </td>
+            <td id="price">@money($product->price)</td>
         </tr>
         @endforeach
     </table>

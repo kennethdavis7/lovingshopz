@@ -4,7 +4,7 @@ import PrintButton from "@/Components/PrintButton.vue";
 import CreateButton from "@/Components/CreateButton.vue";
 import Card from "@/Components/CardTemplate.vue";
 import Pagination from "@/Components/Pagination.vue";
-import SuccessAlert from "@/Components/SuccessAlert.vue";
+import Flash from "@/Components/Flash.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import { watch, ref } from "vue";
 import { Head, Link, router } from "@inertiajs/vue3";
@@ -116,8 +116,8 @@ const handleChangePerPage = (perPage) => {
 <template>
     <Head title="Products" />
 
-    <div class="flex justify-end mb-5" v-if="$page.props.flash.successMessage">
-        <SuccessAlert :message="$page.props.flash.successMessage" />
+    <div class="flex justify-end mb-5" v-if="$page.props.flash.message">
+        <Flash :message="$page.props.flash.message" />
     </div>
 
     <div class="flex justify-between">

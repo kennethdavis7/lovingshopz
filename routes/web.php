@@ -1,13 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\Admin\AdminProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DashboardController;
 
 
 /*
@@ -23,7 +20,7 @@ use App\Http\Controllers\UserController;
 
 Route::inertia('/', 'Home/Index')->name('home');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware('admin')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('products/report', [ProductController::class, 'report'])->name('products.report');
@@ -49,34 +46,12 @@ Route::middleware(['auth'])->group(function () {
             'destroy' => 'categories.destroy',
         ]
     );
-
-    Route::resource('orders', OrderController::class)->names(
-        [
-            'index' => 'orders.index',
-            'create' => 'orders.create',
-            'store' => 'orders.store',
-            'edit' => 'orders.edit',
-            'update' => 'orders.update',
-            'destroy' => 'orders.destroy',
-        ]
-    );
-
-    Route::resource('users', UserController::class)->names(
-        [
-            'index' => 'users.index',
-            'create' => 'users.create',
-            'store' => 'users.store',
-            'edit' => 'users.edit',
-            'update' => 'users.update',
-            'destroy' => 'users.destroy',
-        ]
-    );
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::middleware('admin')->group(function () {
+    Route::get('/profile', [AdminProfileController::class, 'edit'])->name('admin.profile.edit');
+    Route::patch('/profile', [AdminProfileController::class, 'update'])->name('admin.profile.update');
+    Route::delete('/profile', [AdminProfileController::class, 'destroy'])->name('admin.profile.destroy');
 });
 
 require __DIR__ . '/auth.php';

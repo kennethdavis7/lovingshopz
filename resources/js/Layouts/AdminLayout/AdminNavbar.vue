@@ -77,7 +77,9 @@ const props = defineProps(["active"]);
                                     <div class="px-1 py-1">
                                         <MenuItem v-slot="{ active }">
                                             <Link
-                                                :href="route('profile.edit')"
+                                                :href="
+                                                    route('admin.profile.edit')
+                                                "
                                                 :class="[
                                                     active
                                                         ? 'bg-gray-50 text-green-600'
@@ -103,13 +105,14 @@ const props = defineProps(["active"]);
                                         <MenuItem v-slot="{ active }">
                                             <Link
                                                 method="post"
-                                                :href="route('logout')"
+                                                :href="route('logout.admin')"
                                                 :class="[
                                                     active
                                                         ? 'bg-gray-50 text-green-600'
                                                         : 'text-gray-900',
                                                     'group flex w-full items-center rounded-md px-2 py-2 text-sm',
                                                 ]"
+                                                as="button"
                                             >
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Inertia\Inertia;
 use App\Models\Product;
@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\Snappy\Facades\SnappyPdf as pdf;
+use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
@@ -122,7 +123,7 @@ class ProductController extends Controller
             }
         }
 
-        return redirect()->route('products.index')->with('successMessage', $product['name'] . ' has been succesfully added!');
+        return redirect()->route('products.index')->with('message', $product['name'] . ' has been succesfully added!');
     }
 
     /**
@@ -146,27 +147,13 @@ class ProductController extends Controller
 
     public function report()
     {
-        // $products = Product::with('category', 'images')->get();
-        // $data = [
-        //     'title' => 'Lovingshopz Products',
-        //     'date' => date('m/d/Y'),
-        //     'products' => $products
-        // ];
-
-        // $pdf = Pdf::loadView('productReport', $data);
-        // return $pdf->download('Lovingshopz.pdf');
         $products = Product::with('category', 'images')->get();
-
-        // Pdf::view('productReport', ['products' => $products])
-        //     ->format('a4')
-        //     ->save('Lovingshopz.pdf');
 
         $pdf = pdf::loadView('reports.products', ['products' => $products]);
 
         $pdf->setOption('enable-local-file-access', true);
 
-        // Stream untuk menampilkan tampilan PDF pada browser
-        return $pdf->stream('Products.pdf');
+        return $pdf->inline('Products.pdf');
     }
 
     /**
@@ -210,7 +197,7 @@ class ProductController extends Controller
             "category_id" => $request->category_id,
         ]);
 
-        return redirect()->route('products.index')->with('successMessage', $product['name'] . ' has been succesfully updated!');
+        return redirect()->route('products.index')->with('message', $product['name'] . ' has been succesfully updated!');
     }
 
     /**
@@ -220,6 +207,6 @@ class ProductController extends Controller
     {
         Product::destroy($product->id);
 
-        return redirect()->route('products.index')->with('successMessage', $product['name'] . ' has been succesfully deleted!');
+        return redirect()->route('products.index')->with('message', $product['name'] . ' has been succesfully deleted!');
     }
 }

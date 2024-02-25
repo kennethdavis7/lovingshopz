@@ -1,6 +1,5 @@
 <script setup>
 import Checkbox from "@/Components/Checkbox.vue";
-import GuestLayout from "@/Layouts/GuestLayout.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
@@ -9,9 +8,6 @@ import TextInput from "@/Components/TextInput.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 
 defineProps({
-    canResetPassword: {
-        type: Boolean,
-    },
     status: {
         type: String,
     },
@@ -24,7 +20,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route("login"), {
+    form.post(route("login.user.functionality"), {
         onFinish: () => form.reset("password"),
     });
 };
@@ -40,7 +36,7 @@ const submit = () => {
         class="flex flex-col items-center p-0 my-28 mx-auto"
         @submit.prevent="submit"
     >
-        <img src="../../../img/logo.png" class="w-80" />
+        <img src="../../../../img/logo.png" class="w-80" />
         <Card class="w-96">
             <div>
                 <InputLabel for="email" value="Email" />
@@ -82,7 +78,7 @@ const submit = () => {
 
             <div class="flex items-center justify-end mt-4">
                 <Link
-                    :href="route('register')"
+                    :href="route('register.user')"
                     class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                     Don't have an account?

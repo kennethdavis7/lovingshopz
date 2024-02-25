@@ -15,7 +15,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route("register"), {
+    form.post(route("register.user.functionality"), {
         onFinish: () => form.reset("password", "password_confirmation"),
     });
 };
@@ -28,7 +28,7 @@ const submit = () => {
         class="flex flex-col items-center p-0 my-28 mx-auto"
         @submit.prevent="submit"
     >
-        <img src="../../../img/logo.png" class="w-80" />
+        <img src="../../../../img/logo.png" class="w-80" />
         <Card class="w-96">
             <div>
                 <InputLabel for="name" value="Name" />
@@ -99,7 +99,7 @@ const submit = () => {
 
             <div class="flex items-center justify-end mt-4">
                 <Link
-                    :href="route('login')"
+                    :href="route('login.user')"
                     class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                     Already registered?
