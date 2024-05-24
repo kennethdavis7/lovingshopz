@@ -1,14 +1,17 @@
 <script setup>
 import Search from "@/Components/Search.vue";
-import PrintButton from "@/Components/PrintButton.vue";
-import CreateButton from "@/Components/CreateButton.vue";
-import Card from "@/Components/CardTemplate.vue";
+import Pdf from "@/Components/Pdf.vue";
+import BoxShadow from "@/Components/BoxShadow.vue";
 import Pagination from "@/Components/Pagination.vue";
 import Flash from "@/Components/Flash.vue";
-import SelectInput from "@/Components/SelectInput.vue";
+import Select from "@/Components/Select.vue";
+import StatusBadge from "@/Components/StatusBadge.vue";
+import Action from "@/Components/Action.vue";
 import { watch, ref } from "vue";
 import { Head, Link, router } from "@inertiajs/vue3";
 import { computed } from "vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import formatCurrency from "@/utils/formatCurrency";
 
 const props = defineProps({
     products: Object,
@@ -26,15 +29,6 @@ const categories = computed(() => [
     },
     ...props.categories,
 ]);
-
-const moneyFormatter = new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-});
-
-const formatCurrency = (num) => {
-    return moneyFormatter.format(num);
-};
 
 const getSortIcon = (column) => {
     if (props.sort_by !== column) {
@@ -64,6 +58,10 @@ const handleSort = (column) => {
 
 const handleDelete = (id) => {
     router.delete(route("products.destroy", id));
+};
+
+const handleEdit = (id) => {
+    router.get(route("products.edit", id));
 };
 
 const search = ref();
@@ -100,6 +98,10 @@ const handleChangeCategory = (categoryId) => {
     });
 };
 
+const handleCreate = () => {
+    router.get(route("products.create"));
+};
+
 const handleChangePerPage = (perPage) => {
     const url = new URL(window.location.href);
 
@@ -122,14 +124,16 @@ const handleChangePerPage = (perPage) => {
 
     <div class="flex justify-between">
         <h1 class="font-bold text-4xl text-gray-800">Products</h1>
-        <CreateButton />
+        <PrimaryButton class="px-6 py-2" @click="handleCreate"
+            >Create</PrimaryButton
+        >
     </div>
-    <Card>
+    <BoxShadow>
         <div
             class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4"
         >
-            <div class="flex items-center">
-                <SelectInput
+            <div class="flex items-center gap-3">
+                <Select
                     id="category_id"
                     :modelValue="category_id"
                     @update:modelValue="handleChangeCategory"
@@ -137,8 +141,7 @@ const handleChangePerPage = (perPage) => {
                     popUpClass="w-96"
                     buttonClass="py-2"
                 />
-                <div class="mx-2"></div>
-                <SelectInput
+                <Select
                     :model-value="products.per_page"
                     @update:model-value="handleChangePerPage"
                     :data="
@@ -149,13 +152,12 @@ const handleChangePerPage = (perPage) => {
                     "
                     buttonClass="py-2"
                 />
-                <div class="mx-2"></div>
-                <PrintButton />
+                <Pdf />
             </div>
             <Search v-model="search" />
         </div>
         <table
-            class="block w-full text-sm mb-2 text-left rtl:text-right text-gray-500 overflow-x-scroll"
+            class="w-full text-sm mb-2 text-left rtl:text-right text-gray-500 overflow-x-scroll"
         >
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
@@ -190,10 +192,10 @@ const handleChangePerPage = (perPage) => {
                     <th
                         scope="col"
                         class="px-6 py-3 whitespace-nowrap cursor-pointer"
-                        @click="() => handleSort('qty')"
+                        @click="() => handleSort('stock')"
                     >
                         <div class="flex items-center gap-2">
-                            <img :src="`/icons/${getSortIcon('qty')}`" />
+                            <img :src="`/icons/${getSortIcon('stock')}`" />
                             <span>Quantity</span>
                         </div>
                     </th>
@@ -211,12 +213,12 @@ const handleChangePerPage = (perPage) => {
                         Status
                     </th>
                     <th scope="col" class="px-6 py-3 whitespace-nowrap">
-                        Action
+                        Actions
                     </th>
                 </tr>
             </thead>
             <tbody v-for="(product, idx) in products.data" :key="product.id">
-                <tr class="bg-white border-b">
+                <tr class="bg-white border-b items-center">
                     <td class="px-6 py-4">
                         {{
                             products.per_page * (products.current_page - 1) +
@@ -236,12 +238,11 @@ const handleChangePerPage = (perPage) => {
                         <span v-else>-</span>
                     </td>
 
-                    <th
-                        scope="row"
+                    <td
                         class="whitespace-nowrap px-6 py-4 text-wrap font-medium text-gray-900"
                     >
                         {{ product.name }}
-                    </th>
+                    </td>
                     <td class="px-6 py-4">
                         <span
                             id="badge-dismiss-default"
@@ -251,8 +252,8 @@ const handleChangePerPage = (perPage) => {
                         </span>
                     </td>
                     <td class="px-6 py-4 text-center">
-                        <template v-if="product.qty">
-                            {{ product.qty }}
+                        <template v-if="product.stock">
+                            {{ product.stock }}
                         </template>
 
                         <template v-else>&infin;</template>
@@ -261,34 +262,23 @@ const handleChangePerPage = (perPage) => {
                         {{ formatCurrency(product.price) }}
                     </td>
                     <td class="px-6 py-4">
-                        <div class="flex items-center">
-                            <template v-if="product.status">
-                                <div
-                                    class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"
-                                ></div>
-                                Published
-                            </template>
-                            <template v-else>
-                                <div
-                                    class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"
-                                ></div>
-                                Unpublished
-                            </template>
-                        </div>
+                        <StatusBadge :status="product.status" />
                     </td>
                     <td class="px-6 py-4">
-                        <Link
-                            :href="route('products.edit', product.id)"
-                            class="font-medium mr-4 text-blue-600 hover:underline"
-                            >Edit</Link
-                        >
-                        <button
-                            type="submit"
-                            @click="() => handleDelete(product.id)"
-                            class="font-medium text-red-600 hover:underline"
-                        >
-                            Delete
-                        </button>
+                        <div class="flex items-center gap-4">
+                            <Action
+                                class="text-blue-600"
+                                @click="() => handleEdit(product.id)"
+                            >
+                                Edit
+                            </Action>
+                            <Action
+                                class="text-red-600"
+                                @click="() => handleDelete(product.id)"
+                            >
+                                Delete
+                            </Action>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -298,7 +288,7 @@ const handleChangePerPage = (perPage) => {
             <span class="total_products">
                 Total Products: {{ props.total_products }}
             </span>
-            <Pagination :products="props.products" />
+            <Pagination :data="props.products" />
         </div>
-    </Card>
+    </BoxShadow>
 </template>

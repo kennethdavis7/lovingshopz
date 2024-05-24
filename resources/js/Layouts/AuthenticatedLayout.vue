@@ -1,14 +1,13 @@
 <script setup>
-import NavbarAdmin from "./AdminLayout/AdminNavbar.vue";
-import SidebarAdmin from "./AdminLayout/AdminSidebar.vue";
-import ContentAdmin from "@/Components/ContentAdmin.vue";
+import Navbar from "./AuthenticatedLayout/AuthenticatedNavbar.vue";
+import Sidebar from "./AuthenticatedLayout/AuthenticatedSidebar.vue";
 </script>
 
 <template>
-    <NavbarAdmin />
-    <SidebarAdmin />
+    <Navbar />
+    <Sidebar />
 
-    <ContentAdmin>
+    <div class="p-7 sm:ml-64 mt-20">
         <slot />
-    </ContentAdmin>
+    </div>
 </template>

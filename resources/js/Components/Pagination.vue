@@ -2,9 +2,8 @@
 import { Link, router } from "@inertiajs/vue3";
 import { watch } from "vue";
 import { ref, computed } from "vue";
-import SelectInput from "./SelectInput.vue";
 
-const props = defineProps(["products"]);
+const props = defineProps(["data"]);
 
 // Kita:
 // Selalu render 3 page, yaitu yang mendekati current page.
@@ -99,7 +98,7 @@ const handleSelectPage = (url) => {
                 </li>
             </template> -->
 
-            <template v-for="link in products.links" :key="link.label">
+            <template v-for="link in data.links" :key="link.label">
                 <li>
                     <button
                         type="button"

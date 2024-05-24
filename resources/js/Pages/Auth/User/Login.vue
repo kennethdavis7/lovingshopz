@@ -3,9 +3,10 @@ import Checkbox from "@/Components/Checkbox.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import Card from "@/Components/CardTemplate.vue";
-import TextInput from "@/Components/TextInput.vue";
+import BoxShadow from "@/Components/BoxShadow.vue";
+import InputField from "@/Components/InputField.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
+import Logo from "@/Components/Logo.vue";
 
 defineProps({
     status: {
@@ -20,7 +21,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route("login.user.functionality"), {
+    form.post(route("login"), {
         onFinish: () => form.reset("password"),
     });
 };
@@ -36,12 +37,12 @@ const submit = () => {
         class="flex flex-col items-center p-0 my-28 mx-auto"
         @submit.prevent="submit"
     >
-        <img src="../../../../img/logo.png" class="w-80" />
-        <Card class="w-96">
-            <div>
+        <Logo imageClass="w-80" />
+        <BoxShadow class="w-96">
+            <div class="mb-1">
                 <InputLabel for="email" value="Email" />
 
-                <TextInput
+                <InputField
                     id="email"
                     type="email"
                     class="mt-1 block w-full"
@@ -54,10 +55,10 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
-            <div class="mt-4">
+            <div class="mb-1">
                 <InputLabel for="password" value="Password" />
 
-                <TextInput
+                <InputField
                     id="password"
                     type="password"
                     class="mt-1 block w-full"
@@ -69,16 +70,16 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
 
-            <div class="block mt-4">
+            <div class="block">
                 <label class="flex items-center">
                     <Checkbox name="remember" v-model:checked="form.remember" />
                     <span class="ms-2 text-sm text-gray-600">Remember me</span>
                 </label>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-end">
                 <Link
-                    :href="route('register.user')"
+                    :href="route('register')"
                     class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                     Don't have an account?
@@ -92,6 +93,6 @@ const submit = () => {
                     Log in
                 </PrimaryButton>
             </div>
-        </Card>
+        </BoxShadow>
     </form>
 </template>
