@@ -8,8 +8,6 @@ const props = defineProps({
     true: String,
     false: String,
 });
-
-defineEmits(["change"]);
 </script>
 
 <template>

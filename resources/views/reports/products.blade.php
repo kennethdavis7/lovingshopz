@@ -32,8 +32,8 @@
             <td>{{$product->name}}</td>
             <td>{{$product->category->name}}</td>
             <td>
-                @if(gettype($product->qty) == 'integer')
-                {{$product->qty}}
+                @if(gettype($product->stock) == 'integer')
+                {{$product->stock}}
                 @else
                 &infin;
                 @endif

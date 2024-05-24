@@ -9,9 +9,10 @@ use App\Models\ImageProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Storage;
 use Barryvdh\Snappy\Facades\SnappyPdf as pdf;
 use App\Http\Controllers\Controller;
+use App\Rules\BelowStockRule;
+use Illuminate\Support\Facades\Cache;
 
 class ProductController extends Controller
 {
@@ -21,7 +22,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $request->validate([
-            'sort_by' => ['sometimes', 'nullable', 'string', Rule::in('created_at', 'name', 'categories.name', 'qty', 'price')],
+            'sort_by' => ['sometimes', 'nullable', 'string', Rule::in('created_at', 'name', 'categories.name', 'stock', 'price')],
             'sort_direction' => ['sometimes', 'nullable', 'string', Rule::in('asc', 'desc')],
             'per_page' => ['sometimes', 'nullable', 'numeric', 'min:1'],
             'category_id' => ['sometimes', 'nullable', 'numeric'],
@@ -57,6 +58,10 @@ class ProductController extends Controller
             ]
         )->onEachSide(3);
 
+        foreach ($products as $product) {
+            $product->status = $product->status === 1;
+        }
+
         $categories = Category::all();
 
         return Inertia::render('Admin/Products/Index', [
@@ -85,42 +90,40 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required',
-            'price' => 'required|numeric',
+            'price' => 'required|numeric|min:100',
             'category_id' => 'required',
             'description' => 'required',
-            'status' => 'required',
-            'min_order' => 'required|numeric',
-            // 'images' => 'image|file|mimes:jpeg,png,jpg',
+            'status' => 'required|boolean',
+            'min_order' => ['required', 'numeric', 'min:1', new BelowStockRule($request->stock)],
+            'images' => 'required',
+            'images.*' => 'required|image|file|mimes:jpeg,png,jpg|max:8192',
+            'stock' => 'nullable|numeric|min:1'
+        ], [
+            'images.*.image' => 'All of the files must be an image type'
         ]);
-
-        if (is_string($request->qty) && $request->qty <= 0) {
-            return redirect()->route('products.create');
-        }
 
         $product = Product::create([
             "name" => $request->name,
             "price" => $request->price,
-            "qty" => $request->qty,
+            "stock" => $request->stock,
             "description" => $request->description,
             "status" => $request->status,
             "min_order" => $request->min_order,
             "category_id" => $request->category_id,
         ]);
 
-        if ($request->hasFile('images')) {
-            $files = $request->file('images');
 
-            // Decoration-only images => alt=""
+        $files = $request->file('images');
 
-            foreach ($files as $file) {
-                ImageProduct::create([
-                    'product_id' => $product->id,
-                    'url' => 'storage/' . $file->store('images'),
-                    'alt' => '',
-                ]);
-            }
+        foreach ($files as $file) {
+            ImageProduct::create([
+                'product_id' => $product->id,
+                'url' => 'storage/' . $file->store('images'),
+                'alt' => '',
+            ]);
         }
 
         return redirect()->route('products.index')->with('message', $product['name'] . ' has been succesfully added!');
@@ -129,9 +132,11 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-        //
+        return Inertia::render('Products/Show', [
+            'product' => $product->load('images', 'category')
+        ]);
     }
 
     /**
@@ -139,6 +144,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        $product->status = $product->status === 1;
         return Inertia::render('Admin/Products/Edit', [
             'product' => $product->load('category', 'images'),
             'categories' => Category::all()
@@ -163,13 +169,25 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'price' => 'required|numeric',
+            'price' => 'required|numeric|min:100',
             'category_id' => 'required',
             'description' => 'required',
-            'status' => 'required',
-            'min_order' => 'required|numeric',
-            'new_images.*' => 'file|image|mimes:jpeg,png,jpg',
+            'status' => 'required|boolean',
+            'stock' => 'nullable|numeric|min:1',
+            'images_to_delete' => 'array',
+            'min_order' => ['required', 'numeric', 'min:1', new BelowStockRule($request->stock)],
+            'new_images.*' => 'file|image|mimes:jpeg,png,jpg|max:8192',
             'images_to_delete.*' => 'string',
+            'total_images' => ['required', 'numeric', function ($attribute, $value, $fail) use ($request, $product) {
+                $images_to_delete = $request->images_to_delete == null ? 0 : count($request->images_to_delete);
+                $total_images = count($request->new_images) - $images_to_delete + $product->images()->count();
+                if ($total_images <= 0) {
+                    $fail('There must be at least 1 image');
+                }
+            }],
+        ], [
+            'new_images.*.image' => 'All of the files must be an image type',
+            'total_images.min' => 'There must be at least 1 image'
         ]);
 
         $files = $request->file('new_images') ?? [];
@@ -184,13 +202,13 @@ class ProductController extends Controller
         $images_to_delete = $request->get('images_to_delete') ?? [];
         foreach ($images_to_delete as $image) {
             ImageProduct::where('url', $image)->delete();
-            Storage::delete('public/' . $image);
+            unlink($image);
         }
 
         $product->update([
             "name" => $request->name,
             "price" => $request->price,
-            "qty" => $request->qty,
+            "stock" => $request->stock,
             "description" => $request->description,
             "status" => $request->status,
             "min_order" => $request->min_order,
@@ -205,7 +223,13 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        Product::destroy($product->id);
+        $product_images = $product->images;
+
+        foreach ($product_images as $image) {
+            unlink($image->url);
+        }
+
+        $product->delete();
 
         return redirect()->route('products.index')->with('message', $product['name'] . ' has been succesfully deleted!');
     }

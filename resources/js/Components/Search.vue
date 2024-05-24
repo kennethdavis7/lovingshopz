@@ -1,7 +1,23 @@
 <script setup>
+import { ref } from "vue";
 const model = defineModel({
     type: [String, Number],
     required: false,
+});
+
+const search = ref(null);
+
+const blurSearch = () => {
+    search.value.blur();
+};
+
+defineExpose({
+    blurSearch,
+});
+
+defineEmits({
+    openPreview: { required: false },
+    closePreview: { required: false },
 });
 </script>
 
@@ -28,9 +44,14 @@ const model = defineModel({
         <input
             type="text"
             id="table-search"
-            class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-green-500 focus:border-green-500"
+            ref="search"
+            autocomplete="off"
+            class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500"
             placeholder="Search for items"
             v-model="model"
+            @focus="() => $emit('openPreview')"
+            @blur="() => $emit('closePreview')"
+            @input="() => $emit('openPreview')"
         />
     </div>
 </template>
