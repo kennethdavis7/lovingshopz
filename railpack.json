@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schema.railpack.com",
+    "provider": "php",
+    "buildAptPackages": [
+        "bison",
+        "build-essential",
+        "autoconf",
+        "pkg-config",
+        "libxml2-dev",
+        "libssl-dev",
+        "libcurl4-openssl-dev",
+        "libzip-dev",
+        "libpng-dev",
+        "libjpeg-dev",
+        "libonig-dev"
+    ],
+    "packages": {
+        "php": "8.3",
+        "node": "20"
+    }
+}
