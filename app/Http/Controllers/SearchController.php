@@ -45,4 +45,17 @@ class SearchController extends Controller
             'searchedProducts' => $searchedProducts
         ]);
     }
+
+    public function preview(Request $request)
+    {
+        $search = $request->query('search', '');
+
+        if ($search === '') {
+            return response()->json([]);
+        }
+
+        return Product::search($search)
+            ->take(5)
+            ->get(['id', 'name']);
+    }
 }

@@ -30,7 +30,7 @@ class CategoryController extends Controller
 
         $total_categories = $categories->count();
 
-        $categories = $categories->latest()->paginate($per_page)->appends(
+        $categories = $categories->latest()->paginate($per_page)->withPath(url()->current())->appends(
             [
                 'search' => $search,
                 'per_page' => $per_page
@@ -89,6 +89,7 @@ class CategoryController extends Controller
             ->orderBy('products.' . $sort_by, $sort_direction)
             ->select('products.*')
             ->paginate(20)
+            ->withPath(url()->current())
             ->appends(
                 [
                     'sort_by' => $sort_by,

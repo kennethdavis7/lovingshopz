@@ -49,7 +49,7 @@ class ProductController extends Controller
 
         $total_products = $products->count();
 
-        $products = $products->paginate($per_page)->appends(
+        $products = $products->paginate($per_page)->withPath(url()->current())->appends(
             [
                 'search' => $search,
                 'sort_by' => $sort_by,

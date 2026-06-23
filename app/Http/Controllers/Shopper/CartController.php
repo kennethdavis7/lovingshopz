@@ -13,17 +13,13 @@ class CartController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-    }
+    public function index() {}
 
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
@@ -49,13 +45,14 @@ class CartController extends Controller
             'product_id' => ['exists:products,id']
         ]);
 
-        if (Cart::where('product_id', $request->product_id)->count() > 0) {
-            $cart_item = Cart::where('product_id', $request->product_id)->first();
+        $cart_item = Cart::where('product_id', $request->product_id)
+            ->where('user_id', $user_id)
+            ->first();
 
-            $old_qty = $cart_item->qty;
-            $new_qty = $old_qty + $request->qty;
-
-            $cart_item->update(['qty' => $new_qty]);
+        if ($cart_item) {
+            $cart_item->update([
+                'qty' => $cart_item->qty + $request->qty,
+            ]);
         } else {
             Cart::create([
                 'qty' => $request->qty,
