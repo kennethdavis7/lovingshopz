@@ -20,7 +20,7 @@ class EmailVerificationPromptController extends Controller
             return redirect()->intended(RouteServiceProvider::HOME);
         }
 
-        $request->user()->sendEmailVerificationNotification();
+        // $request->user()->sendEmailVerificationNotification();
 
         return Inertia::render('Auth/User/VerifyEmail', ['status' => session('status')]);
     }

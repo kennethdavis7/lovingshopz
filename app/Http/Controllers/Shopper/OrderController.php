@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Midtrans\Snap;
+use Midtrans\Transaction;
 use Inertia\Inertia;
 
 class OrderController extends Controller
@@ -29,7 +30,7 @@ class OrderController extends Controller
 
     public function index()
     {
-        $orders = Order::with('orderItem')->where('user_id', auth()->user()->id)->get();
+        $orders = Order::with('orderItem')->where('user_id', auth()->user()->id)->latest()->get();
 
         return Inertia::render('Shopper/Orders/Index', [
             'orders' => $orders,
@@ -116,45 +117,35 @@ class OrderController extends Controller
         ]);
 
         if ($transaction === 'capture') {
-            // TODO: For credit card transaction, we need to check whether transaction is challenge by FDS or not
-            if ($type === 'credit_card') {
-                if ($fraud === 'deny') {
-                    // TODO set payment status in merchant's database to 'Challenge by FDS'
-                    // TODO merchant should decide whether this transaction is authorized or not in MAP
-                    echo "Transaction order_id: " . $order_id . " is denied by FDS";
-                } else {
-                    // TODO set payment status in merchant's database to 'Success'
-                    echo "Transaction order_id: " . $order_id . " successfully captured using " . $type;
-                }
+            if ($type === 'credit_card' && $fraud === 'deny') {
+                Order::where('id', $order_id)->update(['status' => 'deny']);
+            } else {
+                Order::where('id', $order_id)->update(['status' => 'settlement']);
             }
         } else if ($transaction === 'settlement') {
-            // TODO set payment status in merchant's database to 'Settlement'
-            Order::where('id', $request->order_id)->update(['status' => 'settlement']);
-            echo "Transaction order_id: " . $order_id . " successfully transfered using " . $type;
+            Order::where('id', $order_id)->update(['status' => 'settlement']);
         } else if ($transaction === 'pending') {
-            // TODO set payment status in merchant's database to 'Pending'
-            echo "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type;
+            Order::where('id', $order_id)->update(['status' => 'pending']);
         } else if ($transaction === 'deny') {
-            // TODO set payment status in merchant's database to 'Denied'
-            Order::where('id', $request->order_id)->update(['status' => 'deny']);
-            echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is denied.";
+            Order::where('id', $order_id)->update(['status' => 'deny']);
         } else if ($transaction === 'expire') {
-            // TODO set payment status in merchant's database to 'expire'
-            Order::where('id', $request->order_id)->update(['status' => 'expire']);
-            echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is expired.";
+            Order::where('id', $order_id)->update(['status' => 'expire']);
         } else if ($transaction === 'cancel') {
-            // TODO set payment status in merchant's database to 'Denied'
-            Order::where('id', $request->order_id)->update(['status' => 'cancel']);
-            echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is canceled.";
+            Order::where('id', $order_id)->update(['status' => 'cancel']);
         }
     }
 
     public function cancel($orderId)
     {
-        $response = Http::withBasicAuth(Config::$serverKey, '')
-            ->post('https://api.sandbox.midtrans.com/v2/' . urlencode($orderId) . '/cancel');
+        $cancel = Transaction::cancel($orderId);
 
-        return $response;
+        if (($cancel->status_code ?? null) === '200') {
+            Order::where('id', $orderId)->update([
+                'status' => 'cancel',
+            ]);
+        }
+
+        return redirect()->route('orders.index');
     }
 
     public function shipping()
@@ -177,5 +168,65 @@ class OrderController extends Controller
         }
 
         return response()->json();
+    }
+
+    public function buyNow(Request $request)
+    {
+        $request->validate([
+            'product_id' => ['required', 'exists:products,id'],
+            'qty' => ['nullable', 'integer', 'min:1'],
+        ]);
+
+        $user = auth()->user();
+        $qty = $request->qty ?? 1;
+
+        $snap_token = DB::transaction(function () use ($user, $request, $qty) {
+            $product = \App\Models\Product::findOrFail($request->product_id);
+
+            $total_price = $product->price * $qty;
+
+            $order = Order::create([
+                'id' => Str::uuid(),
+                'user_id' => $user->id,
+                'payment_type' => 'Belum dipilih',
+                'transaction_time' => Carbon::now(),
+            ]);
+
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $product->id,
+                'price' => $product->price,
+                'qty' => $qty,
+                'total_price' => $total_price,
+            ]);
+
+            $payload = [
+                'transaction_details' => [
+                    'order_id' => $order->id,
+                    'gross_amount' => $total_price,
+                ],
+                'customer_details' => [
+                    'name' => $user->name,
+                    'email' => $user->email,
+                ],
+                'item_details' => [[
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'price' => $product->price,
+                    'quantity' => $qty,
+                ]],
+            ];
+
+            $snap_token = Snap::getSnapToken($payload);
+
+            $order->snap_token = $snap_token;
+            $order->save();
+
+            return $snap_token;
+        });
+
+        return response()->json([
+            'snap_token' => $snap_token,
+        ]);
     }
 }

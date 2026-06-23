@@ -47,7 +47,7 @@ const addCart = () => {
                 {
                     timeout: 2000,
                     position: "bottom-center",
-                }
+                },
             );
         },
     });
@@ -71,10 +71,17 @@ watch(
         if (cart.qty + existingQtyVal > props.product.stock) {
             cart.qty = Math.max(stockVal - existingQtyVal, cart.qty);
         }
-    }
+    },
 );
 
-const handlePayment = () => {};
+const handleBuyNow = async () => {
+    const res = await axios.post(route("orders.buy-now"), {
+        product_id: props.product.id,
+        qty: cart.qty,
+    });
+
+    window.snap.pay(res.data.snap_token);
+};
 </script>
 
 <template>
@@ -123,7 +130,7 @@ const handlePayment = () => {};
                 class="p-3 disabled:opacity-25 disabled:cursor-not-allowed"
                 type="button"
                 :disabled="!canAddToCart || hasError"
-                @click="handlePayment"
+                @click="handleBuyNow"
             >
                 Beli sekarang
             </PrimaryButton>

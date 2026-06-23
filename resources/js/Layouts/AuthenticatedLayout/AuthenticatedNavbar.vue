@@ -3,10 +3,6 @@ import { Link } from "@inertiajs/vue3";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import Logo from "@/Components/Logo.vue";
 const props = defineProps(["active"]);
-
-// const handleClick = () => {
-//     console.log("fasjkfajsklfj");
-// };
 </script>
 <template>
     <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200">

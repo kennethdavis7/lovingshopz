@@ -5,7 +5,7 @@ import Logo from "@/Components/Logo.vue";
 import Search from "@/Components/Search.vue";
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import logout from "@/utils/logout";
-import { MeiliSearch } from "meilisearch";
+// import { MeiliSearch } from "meilisearch";
 import { Float } from "@headlessui-float/vue";
 
 const {
@@ -24,14 +24,14 @@ const searchInput = ref(null);
 
 const show = ref(false);
 const results = ref([]);
-const client = ref(null);
+// const client = ref(null);
 const currentHit = ref(0);
 
 const search = ref(
     (() => {
         const url = new URL(window.location.href);
         return url.searchParams.get("search");
-    })()
+    })(),
 );
 
 const handleSearch = () => {
@@ -55,7 +55,7 @@ const currentRoute = ref(route().current("search*"));
 const categoriesToShow = ref(getCategoriesToShow(window.outerWidth));
 
 const previewCategories = computed(() =>
-    categories.slice(0, categoriesToShow.value)
+    categories.slice(0, categoriesToShow.value),
 );
 
 const moreCategories = computed(() => categories.slice(10));
@@ -79,20 +79,29 @@ let searchTimeout = null;
 const searchPreview = (val) => {
     if (searchTimeout !== null) {
         clearTimeout(searchTimeout);
-        searchTimeout = null;
     }
 
     searchTimeout = setTimeout(async () => {
-        results.value = await client.value.index("products").search(val);
+        if (!val) {
+            results.value = { hits: [], estimatedTotalHits: 0 };
+            return;
+        }
+
+        const response = await fetch(route("search.preview", { search: val }));
+        const data = await response.json();
+
+        results.value = {
+            hits: data,
+            estimatedTotalHits: data.length,
+        };
     }, 250);
 };
-
 onMounted(async () => {
-    client.value = new MeiliSearch({
-        host: "http://localhost:7700",
-    });
+    // client.value = new MeiliSearch({
+    //     host: "http://localhost:7700",
+    // });
 
-    results.value = await client.value.index("products").search(search.value);
+    // results.value = await client.value.index("products").search(search.value);
 
     window.addEventListener("resize", handleWindowResize);
 
@@ -215,7 +224,7 @@ watch(search, (val) => {
                                             @click="
                                                 () =>
                                                     showDetailProduct(
-                                                        previewProduct.id
+                                                        previewProduct.id,
                                                     )
                                             "
                                         >
@@ -480,7 +489,7 @@ watch(search, (val) => {
                                     :href="
                                         route(
                                             'categories.show',
-                                            previewCategory.id
+                                            previewCategory.id,
                                         )
                                     "
                                     :class="
@@ -529,7 +538,7 @@ watch(search, (val) => {
                                                             {
                                                                 category:
                                                                     moreCategory.id,
-                                                            }
+                                                            },
                                                         )
                                                             ? 'bg-green-100 text-black'
                                                             : 'text-gray-900 hover:bg-green-100',
@@ -538,7 +547,7 @@ watch(search, (val) => {
                                                     :href="
                                                         route(
                                                             'categories.show',
-                                                            moreCategory.id
+                                                            moreCategory.id,
                                                         )
                                                     "
                                                 >

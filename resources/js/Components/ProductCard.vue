@@ -29,6 +29,7 @@ const seeDetail = (id) => {
 };
 
 const addCart = () => {
+    console.log("ADD CART CLICKED", props.data.id, cart);
     cart.post(route("carts.store"), {
         preserveScroll: true,
         preserveState: true,
@@ -38,6 +39,7 @@ const addCart = () => {
             });
         },
         onSuccess: () => {
+            console.log("REQUEST SUCCESS");
             toast.success(`${props.data.name} telah dimasukkan ke keranjang`, {
                 timeout: 2000,
             });

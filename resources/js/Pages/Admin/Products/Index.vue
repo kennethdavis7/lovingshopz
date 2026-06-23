@@ -44,7 +44,7 @@ const handleSort = (column) => {
     if (props.sort_by === column) {
         url.searchParams.set(
             "sort_direction",
-            props.sort_direction === "asc" ? "desc" : "asc"
+            props.sort_direction === "asc" ? "desc" : "asc",
         );
     } else {
         url.searchParams.set("sort_by", column);
@@ -183,7 +183,7 @@ const handleChangePerPage = (perPage) => {
                         <div class="flex items-center gap-4">
                             <img
                                 :src="`/icons/${getSortIcon(
-                                    'categories.name'
+                                    'categories.name',
                                 )}`"
                             />
                             <span>Category</span>
@@ -245,8 +245,7 @@ const handleChangePerPage = (perPage) => {
                     </td>
                     <td class="px-6 py-4">
                         <span
-                            id="badge-dismiss-default"
-                            class="whitespace-nowrap inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-green-800 bg-green-100 rounded"
+                            class="inline-block break-words px-2 py-1 text-sm font-medium text-green-800 bg-green-100 rounded max-w-[200px]"
                         >
                             {{ product.category.name }}
                         </span>

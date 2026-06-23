@@ -1,9 +1,8 @@
 <script setup>
-import { Head } from "@inertiajs/vue3";
+import { Head, router } from "@inertiajs/vue3";
 import BoxShadow from "@/Components/BoxShadow.vue";
 import formatCurrency from "@/utils/formatCurrency";
 import Action from "@/Components/Action.vue";
-import axios from "axios";
 
 const props = defineProps({
     orders: Object,
@@ -16,10 +15,15 @@ const totalPrice = (orderItems) => {
 };
 
 const handleCancel = (orderId) => {
-    axios
-        .post(route("orders.cancel", orderId))
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+    router.post(
+        route("orders.cancel", orderId),
+        {},
+        {
+            preserveScroll: true,
+            preserveState: false,
+            onSuccess: () => window.location.reload(),
+        },
+    );
 };
 
 const handleContinue = (snap_token) => {
@@ -67,7 +71,10 @@ const handleContinue = (snap_token) => {
                     <td class="px-6 py-4">
                         <div
                             class="flex items-center gap-4"
-                            v-if="order.status !== 'settlement'"
+                            v-if="
+                                order.status !== 'settlement' &&
+                                order.status !== 'cancel'
+                            "
                         >
                             <Action
                                 class="text-blue-600"
@@ -76,6 +83,7 @@ const handleContinue = (snap_token) => {
                                 Lanjut
                             </Action>
                             <Action
+                                v-if="order.payment_type !== 'Belum dipilih'"
                                 class="text-red-600"
                                 @click="() => handleCancel(order.id)"
                             >

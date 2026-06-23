@@ -30,6 +30,7 @@ const props = defineProps(["data"]);
 // });
 
 const handleSelectPage = (url) => {
+    console.log(url);
     router.get(url, undefined, {
         replace: true,
         preserveScroll: true,
@@ -108,7 +109,8 @@ const handleSelectPage = (url) => {
                                 ? 'text-green-600 bg-green-50 hover:bg-green-100 hover:text-green-700 dark:bg-gray-700 dark:text-white'
                                 : 'leading-tight text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white',
                         ]"
-                        @click="() => handleSelectPage(link.url)"
+                        :disabled="!link.url"
+                        @click="link.url && handleSelectPage(link.url)"
                     >
                         <span v-html="link.label"></span>
                     </button>

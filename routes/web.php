@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Request;
 
 Route::get('/', [HomeController::class, 'index'])->middleware('verified')->name('home');
 Route::get('/search', [SearchController::class, 'index'])->middleware('verified')->name('search');
+Route::get('/search-preview', [SearchController::class, 'preview'])->name('search.preview');
 Route::inertia('/about', 'About/Index')->middleware('verified')->name('about');
 
 Route::middleware('auth')->group(function () {
@@ -40,6 +41,7 @@ Route::middleware('auth')->group(function () {
         Route::post('orders/checkout', [OrderController::class, 'checkout'])->name('orders.checkout');
         Route::get('orders/finish', [OrderController::class, 'finish'])->name('orders.finish');
         Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+        Route::post('/orders/buy-now', [OrderController::class, 'buyNow'])->name('orders.buy-now');
     });
 
     Route::middleware('role:admin')->group(function () {
