@@ -1,8 +1,0 @@
-node_modules
-vendor
-.env
-.git
-storage/logs
-bootstrap/cache/*.php
-dumps
-data.ms
