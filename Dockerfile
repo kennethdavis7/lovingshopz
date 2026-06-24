@@ -1,12 +1,17 @@
 FROM php:8.3-apache
 
 RUN apt-get update && apt-get install -y \
-    git unzip zip curl \
-    wkhtmltopdf \
+    git unzip zip curl wget \
+    libxrender1 libfontconfig1 libx11-dev libjpeg62-turbo libxtst6 \
     libpng-dev libjpeg-dev libfreetype6-dev \
     libzip-dev libonig-dev libxml2-dev \
     nodejs npm \
     && docker-php-ext-install pdo pdo_mysql mbstring zip exif pcntl bcmath gd
+
+RUN wget "https://github.com/h4cc/wkhtmltopdf-amd64/blob/master/bin/wkhtmltopdf-amd64?raw=true" -O /usr/local/bin/wkhtmltopdf \
+    && chmod +x /usr/local/bin/wkhtmltopdf \
+    && wget "https://github.com/h4cc/wkhtmltoimage-amd64/blob/master/bin/wkhtmltoimage-amd64?raw=true" -O /usr/local/bin/wkhtmltoimage \
+    && chmod +x /usr/local/bin/wkhtmltoimage
 
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
