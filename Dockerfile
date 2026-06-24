@@ -2,6 +2,7 @@ FROM php:8.3-apache
 
 RUN apt-get update && apt-get install -y \
     git unzip zip curl \
+    wkhtmltopdf \
     libpng-dev libjpeg-dev libfreetype6-dev \
     libzip-dev libonig-dev libxml2-dev \
     nodejs npm \
