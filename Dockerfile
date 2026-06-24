@@ -7,9 +7,6 @@ RUN apt-get update && apt-get install -y \
     nodejs npm \
     && docker-php-ext-install pdo pdo_mysql mbstring zip exif pcntl bcmath gd
 
-RUN a2dismod mpm_event mpm_worker mpm_prefork || true \
-    && a2enmod mpm_prefork rewrite
-
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
@@ -30,6 +27,10 @@ RUN npm run build
 
 RUN chown -R www-data:www-data storage bootstrap/cache
 
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+CMD ["/usr/local/bin/docker-entrypoint.sh"]
