@@ -23,7 +23,12 @@ defineEmits(["deleteImage"]);
         >
             <img
                 :src="getImageUrl(image)"
-                @load="(e) => revokeImageBlob(e.target.src)"
+                @load="
+                    (e) => {
+                        if (e.target.src.startsWith('blob:'))
+                            revokeImageBlob(e.target.src);
+                    }
+                "
                 class="max-w-full max-h-full"
                 draggable="false"
             />
