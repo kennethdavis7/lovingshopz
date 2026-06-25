@@ -24,6 +24,9 @@ WORKDIR /var/www/html
 
 COPY . .
 
+RUN ls -la /var/www/html/public
+RUN ls -la /var/www/html/public/icons
+
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader
