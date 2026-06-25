@@ -34,9 +34,9 @@ const categories = computed(() => [
 ]);
 
 const getSortIcon = (column) => {
-    if (sort_by.value !== column) return sortUpDown;
+    if (props.sort_by !== column) return sortUpDown;
 
-    return sort_direction.value === "asc" ? sortUp : sortDown;
+    return props.sort_direction === "asc" ? sortUp : sortDown;
 };
 
 const handleSort = (column) => {
