@@ -4,7 +4,7 @@ const getImageUrl = (file) => {
         return URL.createObjectURL(file);
     }
 
-    return "/" + file;
+    return file;
 };
 
 const revokeImageBlob = (src) => {
