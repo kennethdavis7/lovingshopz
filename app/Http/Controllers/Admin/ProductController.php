@@ -13,6 +13,7 @@ use Barryvdh\Snappy\Facades\SnappyPdf as pdf;
 use App\Http\Controllers\Controller;
 use App\Rules\BelowStockRule;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -119,13 +120,14 @@ class ProductController extends Controller
         $files = $request->file('images');
 
         foreach ($files as $file) {
+            $path = $file->store('images', 'cloudinary');
+
             ImageProduct::create([
                 'product_id' => $product->id,
-                'url' => 'storage/' . $file->store('images'),
+                'url' => Storage::disk('cloudinary')->url($path),
                 'alt' => '',
             ]);
         }
-
         return redirect()->route('products.index')->with('message', $product['name'] . ' has been succesfully added!');
     }
 
@@ -192,9 +194,11 @@ class ProductController extends Controller
 
         $files = $request->file('new_images') ?? [];
         foreach ($files as $file) {
+            $path = $file->store('images', 'cloudinary');
+
             ImageProduct::create([
                 'product_id' => $product->id,
-                'url' => 'storage/' . $file->store('images'),
+                'url' => Storage::disk('cloudinary')->url($path),
                 'alt' => '',
             ]);
         }
@@ -202,7 +206,6 @@ class ProductController extends Controller
         $images_to_delete = $request->get('images_to_delete') ?? [];
         foreach ($images_to_delete as $image) {
             ImageProduct::where('url', $image)->delete();
-            unlink($image);
         }
 
         $product->update([
@@ -225,9 +228,9 @@ class ProductController extends Controller
     {
         $product_images = $product->images;
 
-        foreach ($product_images as $image) {
-            unlink($image->url);
-        }
+        // foreach ($product_images as $image) {
+        //     unlink($image->url);
+        // }
 
         $product->delete();
 
