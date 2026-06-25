@@ -13,8 +13,8 @@ class ProductObserver
      */
     public function created(Product $product): void
     {
-        Cache::cache('new_products');
-        Cache::cache('popular_products');
+        Cache::forget('new_products');
+        Cache::forget('popular_products');
     }
 
     /**
@@ -22,8 +22,8 @@ class ProductObserver
      */
     public function updated(Product $product): void
     {
-        Cache::cache('new_products');
-        Cache::cache('popular_products');
+        Cache::forget('new_products');
+        Cache::forget('popular_products');
     }
 
     /**
@@ -31,8 +31,8 @@ class ProductObserver
      */
     public function deleted(Product $product): void
     {
-        Cache::cache('new_products');
-        Cache::cache('popular_products');
+        Cache::forget('new_products');
+        Cache::forget('popular_products');
     }
 
     /**
