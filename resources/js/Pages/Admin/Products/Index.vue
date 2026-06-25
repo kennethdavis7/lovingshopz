@@ -12,6 +12,9 @@ import { Head, Link, router } from "@inertiajs/vue3";
 import { computed } from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import formatCurrency from "@/utils/formatCurrency";
+import sortUp from "@/assets/icons/sort_up.svg";
+import sortDown from "@/assets/icons/sort_down.svg";
+import sortUpDown from "@/assets/icons/sort_up_down.svg";
 
 const props = defineProps({
     products: Object,
@@ -31,11 +34,9 @@ const categories = computed(() => [
 ]);
 
 const getSortIcon = (column) => {
-    if (props.sort_by !== column) {
-        return "sort_up_down.svg";
-    }
+    if (sort_by.value !== column) return sortUpDown;
 
-    return props.sort_direction === "asc" ? "sort_down.svg" : "sort_up.svg";
+    return sort_direction.value === "asc" ? sortUp : sortDown;
 };
 
 const handleSort = (column) => {
@@ -171,7 +172,7 @@ const handleChangePerPage = (perPage) => {
                         @click="() => handleSort('name')"
                     >
                         <div class="flex items-center gap-4">
-                            <img :src="`/icons/${getSortIcon('name')}`" />
+                            <img :src="getSortIcon('name')" />
                             <span>Product Name</span>
                         </div>
                     </th>
@@ -181,11 +182,7 @@ const handleChangePerPage = (perPage) => {
                         @click="() => handleSort('categories.name')"
                     >
                         <div class="flex items-center gap-4">
-                            <img
-                                :src="`/icons/${getSortIcon(
-                                    'categories.name',
-                                )}`"
-                            />
+                            <img :src="getSortIcon('categories.name')" />
                             <span>Category</span>
                         </div>
                     </th>
@@ -195,7 +192,7 @@ const handleChangePerPage = (perPage) => {
                         @click="() => handleSort('stock')"
                     >
                         <div class="flex items-center gap-2">
-                            <img :src="`/icons/${getSortIcon('stock')}`" />
+                            <img :src="getSortIcon('stock')" />
                             <span>Quantity</span>
                         </div>
                     </th>
@@ -205,7 +202,7 @@ const handleChangePerPage = (perPage) => {
                         @click="() => handleSort('price')"
                     >
                         <div class="flex items-center gap-2">
-                            <img :src="`/icons/${getSortIcon('price')}`" />
+                            <img :src="getSortIcon('price')" />
                             <span>Price</span>
                         </div>
                     </th>
