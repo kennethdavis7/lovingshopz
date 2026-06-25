@@ -52,7 +52,7 @@ const addCart = () => {
         <Link :href="route('products.show', props.data.id)">
             <img
                 class="rounded-t-lg object-cover h-56 w-full"
-                :src="'/' + props.data.images[0].url"
+                :src="props.data.images[0].url"
                 :alt="props.data.images[0].alt"
             />
         </Link>

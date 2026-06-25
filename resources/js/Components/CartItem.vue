@@ -89,7 +89,7 @@ const handleUpdateHasError = (val) => {
     <div class="flex justify-between items-center focus:outline-none">
         <div class="item flex w-11/12">
             <img
-                :src="'/' + props.item.product_url"
+                :src="props.item.product_url"
                 alt=""
                 class="w-20 h-auto object-contain"
             />

@@ -9,7 +9,7 @@ export default {
                 footerSpaceY: (user) =>
                     user?.role_id === 2 ? "8rem" : undefined,
             },
-            () => page
+            () => page,
         ),
 };
 </script>
@@ -81,7 +81,7 @@ onUnmounted(() => {
     if (slider.value) {
         slider.value.removeEventListener(
             "scroll",
-            handleThumbnailCarouselScroll
+            handleThumbnailCarouselScroll,
         );
     }
 });
@@ -98,7 +98,7 @@ onUnmounted(() => {
         <div class="flex">
             <div class="box-1 w-2/6">
                 <img
-                    :src="'/' + props.product.images[currentImageIndex].url"
+                    :src="props.product.images[currentImageIndex].url"
                     alt=""
                     class="w-full h-64 object-contain"
                 />
@@ -132,7 +132,7 @@ onUnmounted(() => {
                             :key="image.id"
                         >
                             <img
-                                :src="'/' + image.url"
+                                :src="image.url"
                                 alt=""
                                 class="carousel__item rounded-lg cursor-pointer border w-20 h-20 border-grey object-contain"
                                 @click="() => changeImageIndex(index)"

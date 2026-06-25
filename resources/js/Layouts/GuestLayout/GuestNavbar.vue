@@ -321,10 +321,7 @@ watch(search, (val) => {
                                         >
                                         <img
                                             class="w-8 h-8 rounded-full object-contain"
-                                            :src="
-                                                '/' +
-                                                $page.props.auth.user.image
-                                            "
+                                            :src="$page.props.auth.user.image"
                                             alt="user photo"
                                         />
                                     </button>
