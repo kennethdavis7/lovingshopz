@@ -32,16 +32,14 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $validatedData = $request->validated();
-        $splitURL = explode('/', auth()->user()->image);
-        array_shift($splitURL);
 
         if ($request->hasFile('image')) {
-            $validatedData['image'] = 'storage/' . $request->file('image')->store('images');
+            $path = $request->file('image')->store('profile_images', 'cloudinary');
+
+            $validatedData['image'] = Storage::disk('cloudinary')->url($path);
         } else if (!is_string($validatedData['image'])) {
             $validatedData['image'] = 'static_images/user.png';
         }
-
-        Storage::disk('public')->delete(join('/', $splitURL));
 
         $request->user()->fill($validatedData);
 
@@ -53,7 +51,6 @@ class ProfileController extends Controller
 
         return Redirect::route('profile.edit');
     }
-
     /**
      * Delete the user's account.
      */
