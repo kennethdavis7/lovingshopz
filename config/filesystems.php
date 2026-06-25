@@ -52,6 +52,7 @@ return [
             'url' => [
                 'secure' => true,
             ],
+            'cache' => false,
         ],
 
         's3' => [
