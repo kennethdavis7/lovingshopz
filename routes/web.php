@@ -21,13 +21,13 @@ use Illuminate\Support\Facades\Request;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->middleware('verified')->name('home');
-Route::get('/search', [SearchController::class, 'index'])->middleware('verified')->name('search');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::get('/search-preview', [SearchController::class, 'preview'])->name('search.preview');
-Route::inertia('/about', 'About/Index')->middleware('verified')->name('about');
+Route::inertia('/about', 'About/Index')->name('about');
 
 Route::middleware('auth')->group(function () {
-    Route::middleware('role:shopper', 'verified')->group(function () {
+    Route::middleware('role:shopper')->group(function () {
         Route::resource('carts', CartController::class)->names(
             [
                 'index' => 'carts.index',
