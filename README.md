@@ -1,9 +1,16 @@
 # Lovingshopz
-An e-commerce web application for stationary shop. The motivation behind this project was to redesign my parents' old website. 
+An e-commerce web application for a stationery shop. The motivation behind this project was to redesign my parents' old website. 
 
 ## Notes
 * Payments are processed using Midtrans Sandbox. No real transactions will be charged.
 * This project was developed for educational and portfolio purposes.
+
+## Product Dataset
+
+The initial product catalog was generated using a custom Selenium scraper.
+
+Product scraper:
+https://github.com/kennethdavis7/scraper-lovingshopz
 
 ## Live Demo
 
