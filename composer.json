@@ -21,6 +21,8 @@
         "laravel/tinker": "^2.8",
         "meilisearch/meilisearch-php": "^1.7",
         "midtrans/midtrans-php": "^2.5",
+        "symfony/brevo-mailer": "^7.1",
+        "symfony/http-client": "^7.4",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
