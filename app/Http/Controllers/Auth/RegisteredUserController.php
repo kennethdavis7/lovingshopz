@@ -52,10 +52,10 @@ class RegisteredUserController extends Controller
             'role_id' => 2
         ]);
 
-        event(new Registered($user));
+        // event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect()->route('verification.notice');
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 }
