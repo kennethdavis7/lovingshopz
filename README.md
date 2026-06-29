@@ -10,6 +10,7 @@ Website: https://lovingshopz-production.up.railway.app
 
 * Payments are processed using Midtrans Sandbox. No real transactions will be charged.
 * This project was developed for educational and portfolio purposes.
+* The user interface is not fully responsive.
 
 ## Product Dataset
 
