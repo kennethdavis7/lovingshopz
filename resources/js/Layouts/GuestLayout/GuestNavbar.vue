@@ -272,7 +272,7 @@ watch(search, (val) => {
             </div>
             <div class="hidden w-1/4 md:block md:w-auto" id="navbar-default">
                 <ul
-                    class="font-medium flex items-center p-4 gap-8 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row rtl:space-x-reverse md:mt-0 md:border-0md:bg-white"
+                    class="font-medium flex items-center p-4 gap-8 md:p-0 mt-4 border border-gray-100 rounded-lg bg-white md:flex-row rtl:space-x-reverse md:mt-0 md:border-0"
                 >
                     <li>
                         <Link
