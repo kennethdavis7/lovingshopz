@@ -86,7 +86,7 @@ const handleBuyNow = async () => {
 
 <template>
     <footer
-        class="fixed bottom-0 h-20 left-0 z-[10000] w-full px-24 mx-auto bg-white border-t border-gray-200 shadow md:flex md:items-center md:justify-between dark:bg-gray-800 dark:border-gray-600"
+        class="fixed bottom-0 h-20 left-0 z-[10000] w-full px-24 mx-auto bg-white border-t border-gray-200 shadow md:flex md:items-center md:justify-between"
     >
         <div class="flex gap-4 items-center">
             <img :src="props.product.images[0].url" alt="" width="50px" />
